@@ -1,0 +1,37 @@
+
+
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "europe-west1-docker.pkg.dev/$PROJECT_ID/loan-default-repo/loan-default-api",
+        "."
+      ]
+
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "push",
+        "europe-west1-docker.pkg.dev/$PROJECT_ID/loan-default-repo/loan-default-api"
+      ]
+
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    args:
+      [
+        "gcloud",
+        "run",
+        "deploy",
+        "loan-default-api",
+        "--image",
+        "europe-west1-docker.pkg.dev/$PROJECT_ID/loan-default-repo/loan-default-api",
+        "--region",
+        "europe-west1",
+        "--platform",
+        "managed",
+        "--allow-unauthenticated"
+      ]
+
+images:
+  - "europe-west1-docker.pkg.dev/$PROJECT_ID/loan-default-repo/loan-default-api"

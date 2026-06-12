@@ -1,0 +1,10 @@
+.git/
+.vscode/
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+*.ipynb
+.env
+.venv/
+streamlit/
+README.md
