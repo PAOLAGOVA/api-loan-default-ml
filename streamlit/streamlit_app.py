@@ -270,7 +270,6 @@ if st.button("Predict Default Risk"):
                 f"{feature['feature']} "
                 f"({feature['shap_value']:.3f})"
             )
-
     else:
 
         st.error("Error calling API")
