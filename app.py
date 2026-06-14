@@ -147,10 +147,21 @@ def predict(application: LoanApplication):
                 clean_name
             )
         
+        feature_values = X_dense[0]
+        
         shap_df = pd.DataFrame({
             "feature": clean_feature_names,
-            "shap_value": shap_values[0]
+            "shap_value": shap_values[0],
+            "feature_value": feature_values
         })
+
+        shap_df = shap_df[
+            ~(
+                shap_df["feature"].str.contains("_")
+                &
+                (shap_df["feature_value"] == 0)
+            )
+        ]
         
         shap_df["abs_shap"] = (
             shap_df["shap_value"]
