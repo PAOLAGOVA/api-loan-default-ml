@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import pandas as pd
 
 API_URL = "https://loan-default-api-449555437256.europe-west1.run.app/predict"
 # Cuando despliegues:
