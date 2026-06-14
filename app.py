@@ -132,12 +132,26 @@ def predict(application: LoanApplication):
             preprocessor
             .get_feature_names_out()
         )
-
+        
+        clean_feature_names = []
+        
+        for feature in feature_names:
+        
+            clean_name = (
+                feature
+                .replace("num__", "")
+                .replace("cat__", "")
+            )
+        
+            clean_feature_names.append(
+                clean_name
+            )
+        
         shap_df = pd.DataFrame({
-            "feature": feature_names,
+            "feature": clean_feature_names,
             "shap_value": shap_values[0]
         })
-
+        
         shap_df["abs_shap"] = (
             shap_df["shap_value"]
             .abs()
