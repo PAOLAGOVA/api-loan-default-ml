@@ -52,6 +52,32 @@ def predict(application: LoanApplication):
     probability_default = model.predict_proba(input_df)[:, 1][0]
     prediction = int(probability_default >= 0.50)
 
+    # Transformación para SHAP
+    X_transformed = preprocessor.transform(input_df)
+    
+    # SHAP local
+    shap_values = explainer.shap_values(X_transformed)
+    
+    feature_names = preprocessor.get_feature_names_out()
+    
+    shap_df = pd.DataFrame({
+        "feature": feature_names,
+        "shap_value": shap_values[0]
+    })
+    
+    shap_df["abs_shap"] = shap_df["shap_value"].abs()
+    
+    shap_df = (
+        shap_df
+        .sort_values("abs_shap", ascending=False)
+    )
+    
+    top_features = (
+        shap_df[["feature", "shap_value"]]
+        .head(10)
+        .to_dict(orient="records")
+    )
+
     if probability_default >= 0.60:
         risk_label = "High Risk"
     elif probability_default >= 0.30:
@@ -62,6 +88,7 @@ def predict(application: LoanApplication):
     return {
         "prediction": prediction,
         "probability_default": round(float(probability_default), 4),
-        "risk_label": risk_label
+        "risk_label": risk_label,
+        "top_features": top_features
     }
 
