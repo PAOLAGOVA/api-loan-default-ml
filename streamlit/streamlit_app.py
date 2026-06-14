@@ -220,6 +220,57 @@ if st.button("Predict Default Risk"):
             f"Prediction Class: **{result['prediction']}**"
         )
 
+    st.subheader("Top Factors Influencing Prediction")
+
+    features_df = pd.DataFrame(
+        result["top_features"]
+    )
+    
+    features_df["direction"] = features_df["shap_value"].apply(
+        lambda x: "Increase Risk" if x > 0 else "Reduce Risk"
+    )
+    
+    st.dataframe(
+        features_df,
+        use_container_width=True
+    )
+
+    st.subheader("Risk Drivers")
+
+    positive_features = [
+        x for x in result["top_features"]
+        if x["shap_value"] > 0
+    ]
+    
+    negative_features = [
+        x for x in result["top_features"]
+        if x["shap_value"] < 0
+    ]
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+    
+        st.markdown("### ⚠ Factors Increasing Risk")
+    
+        for feature in positive_features:
+    
+            st.error(
+                f"{feature['feature']} "
+                f"({feature['shap_value']:.3f})"
+            )
+    
+    with col2:
+    
+        st.markdown("### ✅ Factors Reducing Risk")
+    
+        for feature in negative_features:
+    
+            st.success(
+                f"{feature['feature']} "
+                f"({feature['shap_value']:.3f})"
+            )
+
     else:
 
         st.error("Error calling API")
