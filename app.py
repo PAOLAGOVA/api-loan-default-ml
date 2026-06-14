@@ -155,6 +155,14 @@ def predict(application: LoanApplication):
             "feature_value": feature_values
         })
 
+        shap_df = shap_df[
+            ~(
+                shap_df["feature"].str.contains("_")
+                &
+                (shap_df["feature_value"] == 0)
+            )
+        ]
+
         friendly_names = {
         
             "LTV":
@@ -222,14 +230,6 @@ def predict(application: LoanApplication):
             shap_df["feature"]
             .replace(friendly_names)
         )
-
-        shap_df = shap_df[
-            ~(
-                shap_df["feature"].str.contains("_")
-                &
-                (shap_df["feature_value"] == 0)
-            )
-        ]
         
         shap_df["abs_shap"] = (
             shap_df["shap_value"]
