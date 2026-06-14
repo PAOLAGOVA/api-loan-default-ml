@@ -257,8 +257,7 @@ if st.button("Predict Default Risk"):
             for feature in positive_features:
         
                 st.error(
-                    f"{feature['feature']} "
-                    f"({feature['shap_value']:.3f})"
+                    f"{feature['feature']} increased the probability of default."
                 )
         
         with col2:
@@ -268,8 +267,7 @@ if st.button("Predict Default Risk"):
             for feature in negative_features:
         
                 st.success(
-                    f"{feature['feature']} "
-                    f"({feature['shap_value']:.3f})"
+                    f"{feature['feature']} reduced the probability of default."
                 )
     else:
 
