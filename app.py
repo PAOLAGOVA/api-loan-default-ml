@@ -11,33 +11,27 @@ app = FastAPI(title="Loan Default Prediction API")
 
 
 class LoanApplication(BaseModel):
-    loan_limit: str
-    Gender: str
-    approv_in_adv: str
-    loan_type: str
-    loan_purpose: str
-    Credit_Worthiness: str
-    open_credit: str
-    business_or_commercial: str
+    
     loan_amount: float
     term: float
-    Neg_ammortization: str
-    interest_only: str
-    lump_sum_payment: str
     property_value: float
-    construction_type: str
-    occupancy_type: str
-    Secured_by: str
-    total_units: str
     income: float
     Credit_Score: float
-    co_applicant_credit_type: str
-    age: str
-    submission_of_application: str
     LTV: float
-    Region: str
-    Security_Type: str
     dtir1: float
+
+    loan_purpose: str
+    occupancy_type: str
+    business_or_commercial: str
+    open_credit: str
+    Credit_Worthiness: str
+    loan_type: str
+    Neg_ammortization: str
+    lump_sum_payment: str
+    co_applicant_credit_type: str
+    approv_in_adv: str
+
+
 
 
 @app.get("/")
