@@ -13,7 +13,7 @@ MODEL_PATH = "loan_default_xgboost_final.pkl"
 
 model = joblib.load(MODEL_PATH)
 
-preprocessor = model.named_steps["preprocess"]
+preprocessor = model.named_steps["preprocessor"]
 xgb_model = model.named_steps["classifier"]
 
 explainer = shap.TreeExplainer(xgb_model)
