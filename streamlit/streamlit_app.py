@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-API_URL = "http://127.0.0.1:8000/predict"
+API_URL = "https://loan-default-api-449555437256.europe-west1.run.app/predict"
 # Cuando despliegues:
 # API_URL = "https://TU_URL_CLOUD_RUN/predict"
 
