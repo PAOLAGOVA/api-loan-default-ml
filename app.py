@@ -155,6 +155,74 @@ def predict(application: LoanApplication):
             "feature_value": feature_values
         })
 
+        friendly_names = {
+        
+            "LTV":
+                "Loan-To-Value Ratio",
+        
+            "income":
+                "Income",
+        
+            "property_value":
+                "Property Value",
+        
+            "loan_amount":
+                "Loan Amount",
+        
+            "Credit_Score":
+                "Credit Score",
+        
+            "dtir1":
+                "Debt-To-Income Ratio",
+        
+            "loan_type_type1":
+                "Loan Type = Type 1",
+        
+            "loan_type_type2":
+                "Loan Type = Type 2",
+        
+            "loan_type_type3":
+                "Loan Type = Type 3",
+        
+            "loan_purpose_p1":
+                "Loan Purpose = P1",
+        
+            "loan_purpose_p2":
+                "Loan Purpose = P2",
+        
+            "loan_purpose_p3":
+                "Loan Purpose = P3",
+        
+            "loan_purpose_p4":
+                "Loan Purpose = P4",
+        
+            "occupancy_type_pr":
+                "Primary Residence",
+        
+            "occupancy_type_ir":
+                "Investment Property",
+        
+            "occupancy_type_sr":
+                "Secondary Residence",
+        
+            "co-applicant_credit_type_CIB":
+                "Co-Applicant Credit Type = CIB",
+        
+            "co-applicant_credit_type_EXP":
+                "Co-Applicant Credit Type = EXP",
+        
+            "approv_in_adv_pre":
+                "Pre-Approved",
+        
+            "approv_in_adv_nopre":
+                "Not Pre-Approved"
+        }
+
+        shap_df["feature"] = (
+            shap_df["feature"]
+            .replace(friendly_names)
+        )
+
         shap_df = shap_df[
             ~(
                 shap_df["feature"].str.contains("_")
